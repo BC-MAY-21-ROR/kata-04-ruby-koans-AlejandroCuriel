@@ -29,8 +29,45 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
-def score(dice)
+def score(numbers)
   # You need to write this method
+  if numbers.length == 1
+    multiplicar_number(numbers)
+  elsif numbers.length > 1
+    multiplicar_number(numbers)
+  else
+    return 0
+  end
+end
+
+# assert_equal 250, score([2,5,2,2,3])
+# assert_equal 550, score([5,5,5,5])
+
+def multiplicar_number(numbers)
+  hash_numbers = Hash.new()
+  points = 0
+  numbers.each do |number|
+    hash_numbers[number] = 0 if hash_numbers[number].nil?
+    hash_numbers[number] += 1
+  end
+
+  hash_numbers.each do |number, numberData|
+    if number == 1 && numberData >= 3
+      points += 1000
+      numberData -= 3
+    end
+    if number != 1 && numberData >= 3
+      points += number * 100
+      numberData -= 3
+    end
+    if number == 1 && numberData <= 2
+      points += 100 * numberData
+    end
+    if number == 5 && numberData <= 2
+      points += 50 * numberData
+    end
+  end
+  points
 end
 
 class AboutScoringProject < Neo::Koan
